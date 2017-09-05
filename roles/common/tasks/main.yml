@@ -39,7 +39,7 @@
       - { name: 'peter', password: 'peter' }
       - { name: 'andy', password: 'andy' }
       - { name: 'nicole', password: 'nicole' }
-      - { name: 'chris', password: 'chris' }
+      - { name: 'andrew', password: 'andrew' }
       - { name: 'tiani', password: 'tiani' }
 
   - name: Copy ssh keys to the user's .ssh directory
@@ -49,7 +49,7 @@
       - { name: 'peter', key: 'peter.pub' }
       - { name: 'andy', key: 'andy.pub' }
 #      - { name: 'nicole', key: 'nicole.pub' }
-#      - { name: 'chris', key: 'chris.pub' }
+#      - { name: 'andrew', key: 'andrew.pub' }
 #      - { name: 'tiani', key: 'tiani.pub' }
 
   - name: Set {{user}} as sudoer
@@ -59,7 +59,7 @@
       - peter
       - andy
       - nicole
-      - chris
+      - andrew
       - tiani
 
   - name: Remove ubuntu's user
@@ -72,7 +72,7 @@
       - peter
       - andy
       - nicole
-      - chris
+      - andrew
       - tiani
 
   - name: Turn on firwall and allow everything
