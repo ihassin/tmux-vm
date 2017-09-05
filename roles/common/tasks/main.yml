@@ -1,0 +1,62 @@
+---
+  - name: Add git package repo
+    apt_repository: repo=ppa:git-core/ppa state=present
+
+  - name: Update apt cache if needed
+    apt: update_cache=yes cache_valid_time=3600 autoremove=yes
+
+  - name: Upgrade OS
+    apt: upgrade={{item}} force=yes autoremove=yes
+    with_items:
+      - dist
+      - full
+
+  - name: Install needed packages
+    apt: pkg={{item}} state=installed autoremove=yes
+    with_items:
+      - logrotate
+      - curl
+      - git
+      - update-manager-core
+
+  - name: Remove unwanted services
+    apt: name={{item}} state=absent autoremove=yes
+    with_items:
+      - postfix
+      - puppet
+      - chef
+
+  - name: Disable periodic OS update checks
+    lineinfile: dest=/etc/apt/apt.conf.d/10periodic regexp="^APT::Periodic::Update-Package-Lists \"1\"" line="APT::Periodic::Update-Package-Lists \"0\";" state=present
+
+  - name: Create the deploy user
+    user: name={{user}} comment="deploy user" generate_ssh_key=yes ssh_key_bits=2048 state=present password={{password}} shell=/bin/bash
+
+  - name: Copy ssh keys to the user's .ssh directory
+    copy: src=ita.pub dest=/home/{{user}}/.ssh/authorized_keys mode=0700 owner={{user}} group={{user}}
+
+  - name: Set {{user}} as sudoer
+    lineinfile: dest=/etc/sudoers line="{{user}} ALL=(ALL) NOPASSWD:ALL"
+
+  - name: Remove ubuntu's user
+    user: name=ubuntu state=absent remove=yes
+
+  - name: Set vi preferences
+    copy: src=vimrc dest=/home/{{user}}/.vimrc owner={{user}}
+
+  - name: Turn on firwall and allow everything
+    ufw: state=enabled policy=allow
+
+  - name: Disallow password authentication
+    lineinfile: dest=/etc/ssh/sshd_config
+                regexp="^PasswordAuthentication"
+                line="PasswordAuthentication no"
+                state=present
+    notify: Restart ssh
+
+  - name: Disallow root SSH access
+    lineinfile: dest=/etc/ssh/sshd_config
+                regexp="^PermitRootLogin"
+                line="PermitRootLogin no"
+                state=present
+    notify: Restart ssh
