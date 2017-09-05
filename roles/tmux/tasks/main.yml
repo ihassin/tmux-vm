@@ -8,5 +8,14 @@
       - tmux
 
   - name: Copy tmux.conf
-    copy: src=tmux.conf  dest=/home/{{user}}/.tmux.conf owner={{user}}
+    copy: src=tmux.conf  dest=/home/{{item}}/.tmux.conf owner={{item}}
+    with_items:
+      - ita
+      - peter
+      - chris
+      - andy
+      - tiani
+      - nicole
 
+  - name: Create tmux directory
+    file: path=/var/tmux state=directory group=tmux mode=g+ws

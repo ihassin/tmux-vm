@@ -1,13 +1,6 @@
 ---
 - hosts: tmux
-  vars:
-    user: ita
-    password: ita
-    env_name: prod
   
-  tasks:
-     - debug: msg="web reading from {{env_name}}"
-
   roles:
     - { role: kamaln7.swapfile, swapfile_size: 1GB, swapfile_swappiness: 10 }
     - common
