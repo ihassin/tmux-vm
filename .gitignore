@@ -12,12 +12,10 @@ report.html
 results.xml
 config/*.pem
 .vagrant
-/**/newsalert_db*
 *.box
-**/**/.vagrant
 doc/**/*
 .teamcity/*
 log/*
 doc/
 spec/failed.txt
-infra/**/*.retry
+*.retry

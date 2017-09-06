@@ -39,7 +39,6 @@
       - { name: 'ita', key: 'ita.pub' }
       - { name: 'peter', key: 'peter.pub' }
       - { name: 'andy', key: 'andy.pub' }
-#      - { name: 'nicole', key: 'nicole.pub' }
+      - { name: 'tiani', key: 'tiani.pub' }
+      - { name: 'nicole', key: 'nicole.pub' }
 #      - { name: 'andrew', key: 'andrew.pub' }
-#      - { name: 'tiani', key: 'tiani.pub' }
-
