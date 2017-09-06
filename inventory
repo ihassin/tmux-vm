@@ -1,3 +1,4 @@
 [tmux]
-local.tmux.com
+#local.tmux.com
+ubuntu@ec2-54-227-194-49.compute-1.amazonaws.com
 

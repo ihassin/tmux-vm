@@ -2,14 +2,14 @@
   - name: Add git package repo
     apt_repository: repo=ppa:git-core/ppa state=present
 
-  - name: Update apt cache if needed
-    apt: update_cache=yes cache_valid_time=3600 autoremove=yes
-
-  - name: Upgrade OS
-    apt: upgrade={{item}} force=yes autoremove=yes
-    with_items:
-      - dist
-      - full
+#  - name: Update apt cache if needed
+#    apt: update_cache=yes cache_valid_time=3600 autoremove=yes
+#
+#  - name: Upgrade OS
+#    apt: upgrade={{item}} force=yes autoremove=yes
+#    with_items:
+#      - dist
+#      - full
 
   - name: Install needed packages
     apt: pkg={{item}} state=installed autoremove=yes
@@ -29,8 +29,8 @@
   - name: Disable periodic OS update checks
     lineinfile: dest=/etc/apt/apt.conf.d/10periodic regexp="^APT::Periodic::Update-Package-Lists \"1\"" line="APT::Periodic::Update-Package-Lists \"0\";" state=present
 
-  - name: Remove ubuntu's user
-    user: name=ubuntu state=absent remove=yes
+#  - name: Remove ubuntu's user
+#    user: name=ubuntu state=absent remove=yes
 
   - name: Create some users
     user: name={{item.name}} comment="user" generate_ssh_key=yes ssh_key_bits=2048 state=present password={{item.password}} shell=/bin/bash
