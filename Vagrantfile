@@ -16,7 +16,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define 'tmux' do |tmux|
     tmux.vm.hostname = 'tmux'
 #    tmux.vm.network 'private_network', ip: '33.33.33.44'
-    tmux.vm.network "public_network"
+    tmux.vm.network "public_network", bridge: "en0: Wi-Fi (AirPort)"
     tmux.vm.provider 'virtualbox' do |provider|
       provider.name = 'tmux'
       provider.customize ['modifyvm', :id, '--memory', '512']
@@ -31,4 +31,3 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
 end
-

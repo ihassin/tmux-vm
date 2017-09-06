@@ -7,6 +7,22 @@
     with_items:
       - tmux
 
+  - name: Create tmux group
+    group: name=tmux state=present
+
+  - name: Create tmux directory
+    file: path=/var/tmux state=directory group=tmux mode=g+ws
+
+  - name: Create some users
+    user: name={{item.name}} comment="tmux user" generate_ssh_key=yes ssh_key_bits=2048 state=present password={{item.password}} shell=/bin/bash groups=tmux
+    with_items:
+      - { name: 'ita', password: 'ita' }
+      - { name: 'peter', password: 'peter' }
+      - { name: 'andy', password: 'andy' }
+      - { name: 'nicole', password: 'nicole' }
+      - { name: 'andrew', password: 'andrew' }
+      - { name: 'tiani', password: 'tiani' }
+
   - name: Copy tmux.conf
     copy: src=tmux.conf  dest=/home/{{item}}/.tmux.conf owner={{item}}
     with_items:
@@ -17,5 +33,13 @@
       - tiani
       - nicole
 
-  - name: Create tmux directory
-    file: path=/var/tmux state=directory group=tmux mode=g+ws
+  - name: Copy ssh keys to the user's .ssh directory
+    copy: src={{item.key}} dest=/home/{{item.name}}/.ssh/authorized_keys mode=0700 owner={{item.name}} group={{item.name}}
+    with_items:
+      - { name: 'ita', key: 'ita.pub' }
+      - { name: 'peter', key: 'peter.pub' }
+      - { name: 'andy', key: 'andy.pub' }
+#      - { name: 'nicole', key: 'nicole.pub' }
+#      - { name: 'andrew', key: 'andrew.pub' }
+#      - { name: 'tiani', key: 'tiani.pub' }
+
