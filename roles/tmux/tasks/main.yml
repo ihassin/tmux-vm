@@ -22,6 +22,7 @@
       - { name: 'nicole', password: 'nicole' }
       - { name: 'andrew', password: 'andrew' }
       - { name: 'tiani', password: 'tiani' }
+      - { name: 'zac', password: 'zac' }
 
   - name: Copy tmux.conf
     copy: src=tmux.conf  dest=/home/{{item}}/.tmux.conf owner={{item}}
@@ -32,6 +33,7 @@
       - andy
       - tiani
       - nicole
+      - zac
 
   - name: Copy ssh keys to the user's .ssh directory
     copy: src={{item.key}} dest=/home/{{item.name}}/.ssh/authorized_keys mode=0700 owner={{item.name}} group={{item.name}}
@@ -41,4 +43,4 @@
       - { name: 'andy', key: 'andy.pub' }
       - { name: 'tiani', key: 'tiani.pub' }
       - { name: 'nicole', key: 'nicole.pub' }
-#      - { name: 'andrew', key: 'andrew.pub' }
+      - { name: 'zac', key: 'zac.pub' }
