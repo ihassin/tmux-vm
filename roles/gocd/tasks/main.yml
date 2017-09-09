@@ -1,0 +1,21 @@
+---
+  - name: Add JDK repo
+    apt_repository:
+      repo: ppa:openjdk-r/ppa
+      state: present
+
+  - name: Update apt cache if needed
+    apt: update_cache=yes cache_valid_time=3600 autoremove=yes
+
+  - name: Prepare for GoCD
+    command: echo "deb https://download.gocd.org /" | sudo tee /etc/apt/sources.list.d/gocd.list
+
+  - name: Prepare
+    shell: curl https://download.gocd.org/GOCD-GPG-KEY.asc | sudo apt-key add -
+
+  - name: Install needed packages for the app
+    apt: pkg={{item}} state=installed autoremove=yes update_cache=yes
+    with_items:
+      - openjdk-8-jre
+      - go-agent
+      - go-server
